@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rita Lima — Data & Marketing Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #060A0F;
+    --panel: #0B1118;
+    --panel-2: #0E1620;
+    --line: #16242F;
+    --line-bright: #1F3546;
+    --neon: #00F0A8;
+    --neon-dim: rgba(0,240,168,0.12);
+    --purple: #9D6BFF;
+    --amber: #FFB020;
+    --text: #C9D6DF;
+    --dim: #6E8494;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px;
+    line-height:1.55;
+  }
+  /* grid backdrop */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(31,53,70,0.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(31,53,70,0.25) 1px, transparent 1px);
+    background-size:44px 44px;
+    pointer-events:none;
+    z-index:0;
+  }
+  main, header, footer{position:relative; z-index:1;}
+  a{color:inherit;}
+  ::selection{background:var(--neon); color:#04110C;}
+
+  /* ---------- terminal header ---------- */
+  header{
+    max-width:1040px;
+    margin:0 auto;
+    padding:56px 28px 40px;
+  }
+  .term{
+    border:1px solid var(--line-bright);
+    background:var(--panel);
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 0 40px -18px rgba(0,240,168,0.35);
+  }
+  .term-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 14px;
+    background:var(--panel-2);
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+    color:var(--dim);
+  }
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.r{background:#FF5F56;} .dot.y{background:#FFBD2E;} .dot.g{background:#27C93F;}
+  .term-bar span{margin-left:8px;}
+  .term-body{padding:26px 26px 30px;}
+  .prompt{color:var(--neon);}
+  .cmd{color:var(--text);}
+  .typed::after{
+    content:"▊";
+    color:var(--neon);
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){
+    .typed::after{animation:none;}
+  }
+  h1{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-size:clamp(38px, 6.5vw, 64px);
+    letter-spacing:0.02em;
+    margin:18px 0 6px;
+    color:#EAF4F8;
+    text-transform:uppercase;
+  }
+  h1 .accent{color:var(--neon); text-shadow:0 0 18px rgba(0,240,168,0.5);}
+  .role{
+    color:var(--purple);
+    font-size:14px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .bio{max-width:640px; color:var(--dim); margin:0 0 22px;}
+  .bio b{color:var(--text); font-weight:500;}
+  .contact-row{display:flex; flex-wrap:wrap; gap:18px; font-size:13px;}
+  .contact-row a{
+    color:var(--neon);
+    text-decoration:none;
+    border-bottom:1px dashed rgba(0,240,168,0.4);
+    padding-bottom:1px;
+  }
+  .contact-row a:hover{border-bottom-style:solid;}
+
+  /* ---------- skills strip ---------- */
+  .skills{
+    max-width:1040px;
+    margin:0 auto;
+    padding:26px 28px 6px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    font-size:12px;
+    padding:5px 12px;
+    border:1px solid var(--line-bright);
+    border-radius:3px;
+    background:var(--panel);
+    color:var(--dim);
+  }
+  .chip::before{content:"▸ "; color:var(--neon);}
+
+  /* ---------- projects ---------- */
+  section.projects{
+    max-width:1040px;
+    margin:0 auto;
+    padding:44px 28px 80px;
+  }
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:26px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:12px;
+  }
+  .sec-head h2{
+    font-family:'Chakra Petch', sans-serif;
+    font-size:26px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    margin:0;
+    color:#EAF4F8;
+  }
+  .sec-head h2::before{content:"// "; color:var(--neon);}
+  .sec-head span{font-size:12px; color:var(--dim);}
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+  @media(min-width:760px){ .grid{grid-template-columns:1fr 1fr;} }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line-bright);
+    border-radius:6px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    opacity:0;
+    transform:translateY(14px);
+  }
+  .card.in{
+    opacity:1; transform:translateY(0);
+    transition:opacity .5s ease, transform .5s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .card:hover{
+    border-color:var(--neon);
+    box-shadow:0 0 28px -10px rgba(0,240,168,0.45);
+    transform:translateY(-3px);
+  }
+  .card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:9px 14px;
+    background:var(--panel-2);
+    border-bottom:1px solid var(--line);
+    font-size:11.5px;
+  }
+  .rec{color:var(--dim); letter-spacing:0.08em;}
+  .rec::before{content:"["; color:var(--neon);}
+  .rec::after{content:"]"; color:var(--neon);}
+  .tool{
+    color:var(--purple);
+    border:1px solid rgba(157,107,255,0.4);
+    padding:2px 9px;
+    border-radius:2px;
+    letter-spacing:0.06em;
+  }
+  .shot{
+    position:relative;
+    aspect-ratio:16/10;
+    background:
+      repeating-linear-gradient(45deg, #0A1017, #0A1017 12px, #0C131C 12px, #0C131C 24px);
+    border-bottom:1px solid var(--line);
+  }
+  .shot img{width:100%; height:100%; object-fit:cover; display:block;}
+  .shot-fallback{
+    display:none;
+    position:absolute; inset:0;
+    align-items:center; justify-content:center;
+    text-align:center;
+    font-size:12px; color:var(--dim);
+    padding:16px;
+  }
+  .card-body{
+    padding:16px 16px 18px;
+    display:flex; flex-direction:column; gap:9px; flex:1;
+  }
+  .card-body h3{
+    font-family:'Chakra Petch', sans-serif;
+    font-size:18px;
+    font-weight:600;
+    margin:0;
+    color:#EAF4F8;
+    letter-spacing:0.02em;
+  }
+  .card-body p{margin:0; font-size:13.5px; color:var(--dim);}
+  .card-footer{
+    margin-top:auto;
+    padding-top:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .card-link{
+    font-size:12.5px;
+    color:var(--neon);
+    text-decoration:none;
+    border:1px solid rgba(0,240,168,0.4);
+    padding:5px 12px;
+    border-radius:3px;
+    background:var(--neon-dim);
+    transition:background .15s ease;
+  }
+  .card-link:hover{background:rgba(0,240,168,0.22);}
+  .metric{font-size:11.5px; color:var(--amber); letter-spacing:0.02em;}
+  .metric::before{content:"» ";}
+
+  footer{
+    max-width:1040px;
+    margin:0 auto;
+    padding:26px 28px 60px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--dim);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  footer span::before{content:"$ "; color:var(--neon);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="term">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span>rita@lisbon:~/portfolio</span>
+    </div>
+    <div class="term-body">
+      <div><span class="prompt">$</span> <span class="cmd typed" id="typeline"></span></div>
+      <h1>Rita <span class="accent">Lima</span></h1>
+      <div class="role">Digital Marketing × Data Analytics</div>
+      <p class="bio">Studied <b>Applied Statistics</b>, ended up running digital marketing for an e-commerce client. SEO, CRO, email, PPC — tracked through GA4 and Search Console. Data's the throughline. These are projects from my <b>AI Data Analyst</b> certificate: SQL, Power BI, Python, Excel, and the decks that presented them.</p>
+      <div class="contact-row">
+        <a href="mailto:ritalimaserra99@gmail.com">ritalimaserra99@gmail.com</a>
+        <a href="https://linkedin.com/in/rita-lima-22861b321" target="_blank" rel="noopener">linkedin/rita-lima</a>
+        <a href="tel:+351916416778">+351 916 416 778</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="skills">
+  <span class="chip">SQL</span>
+  <span class="chip">Python · Pandas · scikit-learn</span>
+  <span class="chip">Power BI · DAX</span>
+  <span class="chip">Advanced Excel</span>
+  <span class="chip">GA4 · Search Console</span>
+  <span class="chip">R · SPSS</span>
+  <span class="chip">Regression · Forecasting</span>
+  <span class="chip">KPI Tracking</span>
+</div>
+
+<section class="projects" id="projects">
+  <div class="sec-head">
+    <h2>Projects</h2>
+    <span>7 records loaded</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- REC-01 SQL report -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-01</span>
+        <span class="tool">SQL · REPORT</span>
+      </div>
+      <div class="shot">
+        <img src="images/sql-report.png" alt="AdventureWorks profitability report, revenue vs margin chart"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/sql-report.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>AdventureWorks Profitability Audit — Report</h3>
+        <p>Started from a paradox: revenue growing, profit per transaction falling. Worked it through three angles — seasonality, structural trend, pricing policy — and the answer was the discounts. Revenue of €109.8M against €9.37M profit, with the 2013 discounted segment alone bleeding close to €1M.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Relatorio_SQL.pdf" target="_blank" rel="noopener">view report</a>
+          <span class="metric">~€1M loss traced to discounts</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-02 SQL code -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-02</span>
+        <span class="tool">SQL · CODE</span>
+      </div>
+      <div class="shot">
+        <img src="images/sql-code.png" alt="SQL view creation code, syntax highlighted"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/sql-code.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>The Queries Behind It</h3>
+        <p>One view (vw_Grupo2) joining order headers, details, and product tables, filtered to completed orders so every number downstream agrees. Eight integrity tests before any analysis, then window functions for the rankings, LAG for year-over-year growth, and the elasticity query that showed discounts past 10% kill volume instead of buying it.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/SQL_Code.sql" target="_blank" rel="noopener">view code</a>
+          <span class="metric">1 view · 8 integrity tests · CTEs, RANK, LAG</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-03 Power BI -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-03</span>
+        <span class="tool">POWER BI</span>
+      </div>
+      <div class="shot">
+        <img src="images/powerbi-dashboard.png" alt="NYC taxi vendor dashboard in Power BI"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/powerbi-dashboard.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>NYC Taxi Analysis — Power BI</h3>
+        <p>Two dashboards off the same star-schema model, one for the vendor and one for the driver, because they want opposite things. Cleaned the raw trip data, derived pickup hour and weekday, classified vehicles by passenger count, then built the DAX for tip-per-mile and income-per-trip.</p>
+        <div class="card-footer">
+          <a class="card-link" href="https://drive.google.com/file/d/1uoMCAmpJsY3h5PRdraPvv8vYHne8JQq0/view?usp=sharing" target="_blank" rel="noopener">view dashboard</a>
+          <span class="metric">$16.7M in trips · May–Jun 2020</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-04 NYC deck -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-04</span>
+        <span class="tool">POWERPOINT</span>
+      </div>
+      <div class="shot">
+        <img src="images/nyc-deck.png" alt="NYC taxi analysis presentation title slide"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/nyc-deck.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>NYC Taxi Analysis — Deck</h3>
+        <p>Walked through the dashboards one business question at a time, each slide ending on what to actually do about it. Demand sits on a 13:00–18:00 plateau, Manhattan and Boro zones carry 98% of trips, and 21% of revenue traces back to an "Unknown Vendor" that needs fixing before anyone trusts the revenue numbers.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/PowerBI_Presentation.pdf" target="_blank" rel="noopener">view slides</a>
+          <span class="metric">21% revenue unattributed</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-05 Python -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-05</span>
+        <span class="tool">PYTHON</span>
+      </div>
+      <div class="shot">
+        <img src="images/python-code.png" alt="Machine learning model comparison, logistic regression vs decision tree vs random forest"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/python-code.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>Titanic Survival — Python</h3>
+        <p>Cleaned the data first: dropped Cabin at 77% missing, imputed Age with medians split by gender since the distributions differ, filled Embarked with the mode. Ran chi-square tests to confirm Sex and Pclass were actually signal, then trained logistic regression, a decision tree, and a random forest on an 80/20 split. Random forest took it on F1.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Python_Code.ipynb" target="_blank" rel="noopener">view notebook</a>
+          <span class="metric">F1 0.741 · Random Forest</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-06 Titanic deck -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-06</span>
+        <span class="tool">POWERPOINT</span>
+      </div>
+      <div class="shot">
+        <img src="images/titanic-deck.png" alt="Titanic survival analysis presentation title slide"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/titanic-deck.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>Titanic Survival Analysis — Deck</h3>
+        <p>Three research questions, each one going past the obvious answer. Gender dominates, but class moves it: first-class women survived at 96.8%, third-class women at 50%. Being a child nearly tripled a boy's odds and did almost nothing for a girl's. Travelling in a family of 2 to 4 beat travelling alone by a wide margin.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Python_Presentation.pdf" target="_blank" rel="noopener">view slides</a>
+          <span class="metric">891 passengers · 38.4% survived</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- REC-07 Excel -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REC-07</span>
+        <span class="tool">EXCEL</span>
+      </div>
+      <div class="shot">
+        <img src="images/excel-dashboard.png" alt="Global Superstore Excel dashboard"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/excel-dashboard.png missing — screenshot the Dashboard tab and save it here</div>
+      </div>
+      <div class="card-body">
+        <h3>Global Superstore — Excel Dashboard</h3>
+        <p>KPI dashboard over ~50k order lines: revenue, profit, cost, orders up top, then profit by region, category mix by market, and net profit margin. Built the derived columns (net sales, net profit, profit category, returns excluded) so the pivots feeding the dashboard actually reconcile.</p>
+        <div class="card-footer">
+          <a class="card-link" href="https://docs.google.com/spreadsheets/d/1ver0jOoK8sB7fEnQhVPydvaXlIlyfuCZ/edit?usp=sharing&ouid=110282651373512717816&rtpof=true&sd=true" target="_blank" rel="noopener">view file</a>
+          <span class="metric">€12.39M revenue · €1.43M profit</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <span>Rita Lima — Lisbon, Portugal</span>
+  <span>last updated: July 2026</span>
+</footer>
+
+<script>
+  // typing effect on the terminal line
+  (function(){
+    var el = document.getElementById('typeline');
+    var text = './load_projects.sh --all';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){ el.textContent = text; return; }
+    var i = 0;
+    (function tick(){
+      if(i <= text.length){
+        el.textContent = text.slice(0, i++);
+        setTimeout(tick, 45);
+      }
+    })();
+  })();
+
+  // reveal cards on scroll
+  var cards = document.querySelectorAll('.card');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  cards.forEach(function(c){ io.observe(c); });
+</script>
+
+</body>
+</html>
