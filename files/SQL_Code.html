@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL_Code.sql — Rita Lima</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0; background:#0B1118; color:#C9D6DF; font-family:'JetBrains Mono', monospace;}
+.topbar{position:sticky; top:0; display:flex; justify-content:space-between; align-items:center;
+  padding:12px 22px; background:#0E1620; border-bottom:1px solid #1F3546; font-size:13px;}
+.topbar b{color:#00F0A8; font-weight:500;}
+.topbar a{color:#9D6BFF; text-decoration:none;}
+.wrap{max-width:1100px; margin:0 auto; padding:22px;}
+.highlight{border:1px solid #1F3546; border-radius:6px; overflow:auto; font-size:13.5px; line-height:1.55;}
+.highlight pre{margin:0; padding:14px;}
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #49483e }
+.highlight { background: #272822; color: #F8F8F2 }
+.highlight .c { color: #959077 } /* Comment */
+.highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.highlight .esc { color: #F8F8F2 } /* Escape */
+.highlight .g { color: #F8F8F2 } /* Generic */
+.highlight .k { color: #66D9EF } /* Keyword */
+.highlight .l { color: #AE81FF } /* Literal */
+.highlight .n { color: #F8F8F2 } /* Name */
+.highlight .o { color: #FF4689 } /* Operator */
+.highlight .x { color: #F8F8F2 } /* Other */
+.highlight .p { color: #F8F8F2 } /* Punctuation */
+.highlight .ch { color: #959077 } /* Comment.Hashbang */
+.highlight .cm { color: #959077 } /* Comment.Multiline */
+.highlight .cp { color: #959077 } /* Comment.Preproc */
+.highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.highlight .c1 { color: #959077 } /* Comment.Single */
+.highlight .cs { color: #959077 } /* Comment.Special */
+.highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.highlight .go { color: #66D9EF } /* Generic.Output */
+.highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #959077 } /* Generic.Subheading */
+.highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.highlight .kt { color: #66D9EF } /* Keyword.Type */
+.highlight .ld { color: #E6DB74 } /* Literal.Date */
+.highlight .m { color: #AE81FF } /* Literal.Number */
+.highlight .s { color: #E6DB74 } /* Literal.String */
+.highlight .na { color: #A6E22E } /* Name.Attribute */
+.highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.highlight .nc { color: #A6E22E } /* Name.Class */
+.highlight .no { color: #66D9EF } /* Name.Constant */
+.highlight .nd { color: #A6E22E } /* Name.Decorator */
+.highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.highlight .ne { color: #A6E22E } /* Name.Exception */
+.highlight .nf { color: #A6E22E } /* Name.Function */
+.highlight .nl { color: #F8F8F2 } /* Name.Label */
+.highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.highlight .nx { color: #A6E22E } /* Name.Other */
+.highlight .py { color: #F8F8F2 } /* Name.Property */
+.highlight .nt { color: #FF4689 } /* Name.Tag */
+.highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.highlight .ow { color: #FF4689 } /* Operator.Word */
+.highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+.highlight, .highlight table, .highlight td{background:#0B1118 !important;}
+.highlight .linenos{color:#3D5568; padding-right:10px; user-select:none;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span><b>SQL_Code.sql</b> — AdventureWorks Profitability Audit</span>
+  <span><a href="SQL_Code.sql" download>download .sql</a> &nbsp;·&nbsp; <a href="../index.html">back to portfolio</a></span>
+</div>
+<div class="wrap">
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span></pre></div></td><td class="code"><div><pre><span></span><span class="c1">-- Objetivo: Criar uma estrutura de dados central (vw_Grupo2) para garantir que toda a equipa cruza as mesmas tabelas vitais </span>
+<span class="c1">--e não há discrepância nos cálculos financeiros (dedução de custos e identificação de faturas pagas/Status=5).</span>
+
+<span class="k">CREATE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span><span class="k">AS</span>
+<span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">h</span><span class="p">.</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="k">MONTH</span><span class="p">(</span><span class="n">h</span><span class="p">.</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Mes</span><span class="p">,</span>
+<span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">SalesOrderID</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FaturaID</span><span class="p">,</span>
+<span class="n">pc</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Categoria</span><span class="p">,</span>
+<span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span>
+<span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">OrderQty</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Quantidade</span><span class="p">,</span><span class="w"> </span>
+<span class="n">d</span><span class="p">.</span><span class="n">UnitPrice</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PrecoUnitario</span><span class="p">,</span>
+<span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">UnitPriceDiscount</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Desconto</span><span class="p">,</span>
+<span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">LineTotal</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ReceitaTotal</span><span class="p">,</span><span class="w"> </span>
+<span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">StandardCost</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">OrderQty</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CustoTotal</span><span class="p">,</span><span class="w"> </span>
+<span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">LineTotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">StandardCost</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">OrderQty</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Margem_Lucro</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span><span class="w"> </span><span class="n">h</span><span class="w"> </span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderDetail</span><span class="w"> </span><span class="n">d</span><span class="w"> </span>
+<span class="k">ON</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">SalesOrderID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">SalesOrderID</span>
+<span class="w"> </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Production</span><span class="p">.</span><span class="n">Product</span><span class="w"> </span><span class="n">p</span>
+<span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">ProductID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">ProductID</span><span class="w"> </span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Production</span><span class="p">.</span><span class="n">ProductSubcategory</span><span class="w"> </span><span class="n">ps</span><span class="w"> </span>
+<span class="k">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">ProductSubcategoryID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ps</span><span class="p">.</span><span class="n">ProductSubcategoryID</span><span class="w"> </span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Production</span><span class="p">.</span><span class="n">ProductCategory</span><span class="w"> </span><span class="n">pc</span>
+<span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">ps</span><span class="p">.</span><span class="n">ProductCategoryID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="p">.</span><span class="n">ProductCategoryID</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">Status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">--Testes de Integridade</span>
+
+<span class="c1">-- Teste 1 - Verificar linhas de encomenda duplicadas</span>
+<span class="c1">-- Esta consulta encontra combinações da mesma fatura (FaturaID), produto (NomeProduto),</span>
+<span class="c1">-- mês (Mes) e ano (Ano) que aparecem mais do que uma vez</span>
+<span class="c1">-- Duplicados podem inflacionar receita/lucro se não forem tratados</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">FaturaID</span><span class="p">,</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CountRows</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">FaturaID</span><span class="p">,</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- Teste 2 - Verificar valores negativos ou inválidos</span>
+<span class="c1">-- Procura linhas onde os campos numéricos são inferiores a 0,</span>
+<span class="c1">-- o que é inválido para receita, custo, quantidade ou preço</span>
+<span class="c1">-- ReceitaTotal, CustoTotal, Quantidade, PrecoUnitario não devem ser negativos</span>
+<span class="c1">-- Margem_Lucro pode ser negativa (prejuízo), por isso não está incluída aqui</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">ReceitaTotal</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>
+<span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">CustoTotal</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>
+<span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">Quantidade</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span>
+<span class="w">  </span><span class="k">OR</span><span class="w"> </span><span class="n">PrecoUnitario</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- Teste 3 - Verificar se os valores do mês são válidos</span>
+<span class="c1">-- Mes deve estar entre 1 e 12</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Mes</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Mes</span><span class="p">;</span>
+
+<span class="c1">-- Teste 4 - Verificar se os valores do ano são razoáveis</span>
+<span class="c1">-- Esta consulta lista todos os anos distintos presentes nos dados</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">;</span>
+
+<span class="c1">-- Teste 5 - Verificar consistência das categorias</span>
+<span class="c1">-- Lista todas as categorias de produto distintas presentes</span>
+<span class="c1">-- Ajuda a identificar categorias em falta ou inconsistentes</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Categoria</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="p">;</span>
+
+<span class="c1">-- Teste 6 - Verificar intervalos de desconto</span>
+<span class="c1">-- Retorna os valores mínimo e máximo de Desconto</span>
+<span class="c1">-- Os descontos devem estar dentro de um intervalo razoável (ex.: 0–1)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Desconto</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">Desconto</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="p">;</span>
+
+<span class="c1">-- Teste de Integridade 7: Verificação de Nulos em colunas críticas </span>
+<span class="c1">-- Objetivo: Garantir que não existem vendas sem lucro calculado ou sem categoria atribuída </span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">FaturaID</span><span class="p">,</span>
+<span class="n">NomeProduto</span><span class="p">,</span><span class="w"> </span>
+<span class="n">Categoria</span><span class="p">,</span>
+<span class="w"> </span><span class="n">Margem_Lucro</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Margem_Lucro</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">Categoria</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+
+<span class="w"> </span><span class="c1">--Teste de Integridade 8: Consistência Financeira </span>
+<span class="w"> </span><span class="c1">-- Objetivo: Garantir que a Margem de Lucro segue a lógica (Receita - Custo) </span>
+<span class="w"> </span><span class="c1">-- Se houver falhas aqui, o &quot;Data Panel&quot; teria erro de cálculo. </span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">FaturaID</span><span class="p">,</span>
+<span class="w"> </span><span class="n">ReceitaTotal</span><span class="p">,</span><span class="w"> </span>
+<span class="n">CustoTotal</span><span class="p">,</span><span class="w"> </span>
+<span class="n">Margem_Lucro</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">ABS</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">CustoTotal</span><span class="p">))</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">01</span><span class="p">;</span>
+
+<span class="c1">---- Teste de Viabilidade 1: Representatividade por Categoria </span>
+<span class="c1">-- Objetivo: Verificar se temos vendas suficientes com e sem desconto em todas as categorias </span>
+<span class="c1">-- Se uma categoria tiver 0 descontos, não podemos fazer a &quot;Autópsia&quot;. </span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Categoria</span><span class="p">,</span><span class="w"> </span>
+<span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalVendas</span><span class="p">,</span><span class="w"> </span>
+<span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">VendasComDesconto</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">VendasSemDesconto</span>
+<span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Categoria</span><span class="p">;</span>
+
+<span class="w"> </span><span class="c1">-- Teste de Viabilidade 2: Cobertura Temporal </span>
+<span class="w"> </span><span class="c1">-- Objetivo: Confirmar se temos dados de todos os meses para evitar conclusões baseadas em anos incompletos. </span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Mes</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MesesComDados</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">;</span>
+
+
+
+<span class="c1">--TEMA 1 - Sazonalidade</span>
+<span class="c1">-- Agrupar por mês e ano</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Mensal</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Mensal</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="w"> </span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">;</span>
+
+<span class="c1">-- Média agrupada por mês</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Media</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Medio</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Mes</span><span class="w"> </span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Mes</span><span class="p">;</span>
+
+<span class="c1">-- Média agrupada por ano</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Media</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Medio</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">;</span>
+
+<span class="c1">-- Calcula valores médios para meses específicos (abril e junho) de 2012</span>
+<span class="c1">-- Ajuda a comparar estes meses com a média geral para entender por que o lucro foi negativo</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">Desconto</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Avg_Desconto</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">CustoTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Avg_Custo</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="k">AVG</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Avg_Receita</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2012</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Mes</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">;</span>
+
+<span class="c1">-- Calcula a receita total e o lucro total geral</span>
+<span class="c1">-- Soma todas as transações na vista vw_Grupo2</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Total</span><span class="p">,</span><span class="w">   </span><span class="c1">-- Receita total de todas as vendas</span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Total</span><span class="w">      </span><span class="c1">-- Lucro total (receita menos custo) de todas as vendas</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="p">;</span><span class="w">                          </span><span class="c1">-- Vista de origem com dados transacionais</span>
+
+<span class="c1">-- Calcula o lucro mensal total por ano </span>
+<span class="c1">-- e classifica os meses dentro de cada ano com base no lucro</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w">                                  </span>
+<span class="w">   </span><span class="n">Mes</span><span class="p">,</span><span class="w">                                  </span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Margem_Total</span><span class="p">,</span><span class="w">    </span><span class="c1">-- Lucro total desse mês (soma de receita menos custo)</span>
+<span class="w">   </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span>
+<span class="w">                </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Ranking_Mensal</span>
+<span class="w">                                         </span><span class="c1">-- Atribui uma classificação a cada mês dentro do mesmo ano</span>
+<span class="w">                                         </span><span class="c1">-- Rank 1 = maior lucro total</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="w">                         </span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Ranking_Mensal</span><span class="p">;</span><span class="w">      </span>
+
+<span class="c1">-- Calcula o lucro total de cada trimestre de cada ano</span>
+<span class="c1">-- e classifica os trimestres dentro do mesmo ano com base no lucro total</span>
+<span class="k">SELECT</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w">                                   </span>
+<span class="w">   </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">DATEFROMPARTS</span><span class="p">(</span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Trimestre</span><span class="p">,</span><span class="w">  </span>
+<span class="w">                                          </span><span class="c1">-- Calcula o trimestre (1–4) a partir do ano e mês</span>
+<span class="w">   </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Margem_Total</span><span class="p">,</span><span class="w">     </span><span class="c1">-- Lucro total do trimestre (soma de receita menos custo)</span>
+<span class="w">   </span><span class="n">RANK</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span>
+<span class="w">                </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Ranking_Trimestral</span>
+<span class="w">                                          </span><span class="c1">-- Atribui uma classificação a cada trimestre dentro do mesmo ano</span>
+<span class="w">                                          </span><span class="c1">-- Rank 1 = trimestre com maior lucro</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">  </span>
+<span class="w">   </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span>
+<span class="w">   </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">DATEFROMPARTS</span><span class="p">(</span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">  </span>
+<span class="w">                                          </span><span class="c1">-- Agrupa o lucro por ano e trimestre</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Ranking_Trimestral</span><span class="p">;</span>
+
+
+<span class="c1">-- Tema 2: Crescimento de Receita e Rentabilidade </span>
+
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Ano</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Total</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Total</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">;</span>
+<span class="cm">/*</span>
+<span class="cm">Ações do código</span>
+<span class="cm">SELECT Ano</span>
+<span class="cm">- Escolhe o ano como base da análise</span>
+<span class="cm">SUM(ReceitaTotal)</span>
+<span class="cm">- Soma toda a receita de cada ano</span>
+<span class="cm">SUM(Margem_Lucro)</span>
+<span class="cm">- Soma todo o lucro de cada ano</span>
+<span class="cm">CAST(... DECIMAL(18,2))</span>
+<span class="cm">- Formata os valores com 2 casas decimais</span>
+<span class="cm">FROM vw_Grupo2</span>
+<span class="cm">- Vai buscar os dados já limpos e preparados</span>
+<span class="cm">GROUP BY Ano</span>
+<span class="cm">- Agrupa os dados por ano (1 linha por ano)</span>
+<span class="cm">ORDER BY Ano</span>
+<span class="cm">- Organiza os resultados por ordem cronológica</span>
+<span class="cm">*/</span>
+
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Ano</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Mes</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Mensal</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Lucro_Mensal</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span><span class="w"> </span><span class="n">Mes</span><span class="p">;</span>
+<span class="cm">/*</span>
+<span class="cm">Ações do código</span>
+<span class="cm">SELECT Ano, Mes</span>
+<span class="cm">- Define o nível de detalhe (ano + mês)</span>
+<span class="cm">SUM(ReceitaTotal)</span>
+<span class="cm">- Calcula a receita total de cada mês</span>
+<span class="cm">SUM(Margem_Lucro)</span>
+<span class="cm">- Calcula o lucro total de cada mês</span>
+<span class="cm">FROM vw_Grupo2</span>
+<span class="cm">- Usa a base de dados preparada</span>
+<span class="cm">GROUP BY Ano, Mes</span>
+<span class="cm">- Agrupa por cada mês de cada ano</span>
+<span class="cm">ORDER BY Ano, Mes</span>
+<span class="cm">- Ordena cronologicamente (timeline correta);</span>
+<span class="cm">*/</span>
+
+<span class="k">WITH</span><span class="w"> </span><span class="n">ReceitaPorAno</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span>
+<span class="w">        </span><span class="n">Ano</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">ReceitaTotal</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Receita_Total</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span>
+<span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">Ano</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Receita_Total</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Receita_Total</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">LAG</span><span class="p">(</span><span class="n">Receita_Total</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Ano</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Crescimento_Anual</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ReceitaPorAno</span><span class="p">;</span>
+<span class="cm">/*</span>
+<span class="cm">Ações do código</span>
+<span class="cm">CTE (primeira parte)</span>
+<span class="cm">WITH ReceitaPorAno AS (...)</span>
+<span class="cm">- Cria uma tabela temporária</span>
+<span class="cm">SUM(ReceitaTotal)</span>
+<span class="cm">- Calcula a receita total por ano</span>
+<span class="cm">GROUP BY Ano</span>
+<span class="cm">- Garante 1 valor por ano</span>
+
+<span class="cm">Query final</span>
+<span class="cm">SELECT Ano, Receita_Total</span>
+<span class="cm">- Mostra os valores calculados</span>
+<span class="cm">LAG(Receita_Total)</span>
+<span class="cm">- Vai buscar a receita do ano anterior</span>
+<span class="cm">OVER (ORDER BY Ano)</span>
+<span class="cm">- Define a ordem temporal (importante para o LAG)</span>
+<span class="cm">Receita_Total - LAG(...)</span>
+<span class="cm">- Calcula o crescimento entre anos;</span>
+<span class="cm">*/</span>
+
+
+<span class="c1">--TEMA 3: Lucratividade e Descontos </span>
+
+<span class="c1">-- TESTE EXPLORATÓRIO 1: Frequência de Aplicação de Descontos </span>
+<span class="c1">-- Objetivo: Perceber o peso das promoções no volume total de operações </span>
+<span class="c1">-- da empresa, calculando a percentagem de linhas faturadas com desconto. </span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Total_Linhas_Faturadas</span><span class="p">,</span>
+<span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Linhas_Com_Desconto</span><span class="p">,</span><span class="w"> </span>
+<span class="w"> </span><span class="n">ROUND</span><span class="p">((</span><span class="k">CAST</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Percentagem_Com_Desconto</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="p">;</span>
+
+
+<span class="c1">--TESTE EXPLORATÓRIO 2: Identificação do &quot;Bottom 5&quot; (Os Piores Infratores) </span>
+<span class="c1">-- Objetivo: Aprofundar o prejuízo detetado na categoria &#39;Bicicletas&#39;, </span>
+<span class="c1">-- identificando os 5 modelos específicos que mais dinheiro destruíram </span>
+<span class="c1">-- quando vendidos com desconto financeiro. </span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span>
+<span class="w"> </span><span class="n">Categoria</span><span class="p">,</span><span class="w"> </span>
+<span class="k">SUM</span><span class="p">(</span><span class="n">Quantidade</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Volume_Vendido_Com_Desconto</span><span class="p">,</span><span class="w"> </span>
+<span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Prejuizo_Total</span>
+<span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Categoria</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Bikes&#39;</span>
+<span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span>
+<span class="w"> </span><span class="n">Categoria</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Prejuizo_Total</span><span class="w"> </span><span class="k">ASC</span>
+
+
+<span class="w"> </span><span class="c1">-- As Queries de Autópsia e Recomendações</span>
+
+<span class="c1">--Query Principal 1(Tema 3): O Impacto Global e a Segmentação por Categoria </span>
+<span class="c1">-- Objetivo: Comparar a tração de volume e a destruição/criação de margem média separando o cenário com e sem promoção por categoria de produto.</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span>
+<span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Com Desconto&#39;</span><span class="w"> </span>
+<span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;Sem Desconto&#39;</span><span class="w"> </span>
+<span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Estrategia_Preco</span><span class="p">,</span><span class="w"> </span>
+<span class="n">Categoria</span><span class="p">,</span><span class="w"> </span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Quantidade</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Media_Unidades_Compradas</span><span class="p">,</span>
+<span class="w"> </span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Media_Lucro_Por_Linha</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Categoria</span><span class="p">,</span><span class="w"> </span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Com Desconto&#39;</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;Sem Desconto&#39;</span><span class="w"> </span><span class="k">END</span>
+
+
+<span class="w"> </span><span class="c1">--Query Principal 2: A Linha Temporal da Estratégia de Preços </span>
+<span class="w"> </span><span class="c1">-- Objetivo: Acompanhar o aumento crónico do uso de descontos por ano fiscal e expor o impacto destrutivo dessa tática na Margem de Lucro anual.</span>
+
+<span class="k">Select</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span>
+<span class="k">Case</span>
+<span class="k">When</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="s1">&#39;Com Desconto&#39;</span>
+<span class="k">Else</span><span class="w"> </span><span class="s1">&#39;Sem Desconto&#39;</span>
+<span class="k">End</span><span class="w"> </span><span class="s1">&#39;Estrategia Preco&#39;</span><span class="p">,</span>
+<span class="k">Count</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Total_Vendas</span><span class="p">,</span>
+<span class="n">FORMAT</span><span class="w"> </span><span class="p">(</span><span class="k">Sum</span><span class="w"> </span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;N2&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Total_Lucro</span>
+<span class="k">From</span><span class="w"> </span><span class="n">vw_Grupo2</span>
+<span class="k">Group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">Ano</span><span class="p">,</span>
+<span class="k">Case</span>
+<span class="k">When</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="s1">&#39;Com Desconto&#39;</span>
+<span class="k">Else</span><span class="w"> </span><span class="s1">&#39;Sem Desconto&#39;</span>
+<span class="k">End</span><span class="w"> </span>
+<span class="k">Order</span><span class="w"> </span><span class="k">By</span><span class="w"> </span><span class="n">Ano</span><span class="w"> </span><span class="k">asc</span>
+
+
+<span class="w"> </span><span class="c1">--A Elasticidade do Desconto (A Ilusão do Volume) </span>
+<span class="w"> </span><span class="c1">-- Objetivo: Calcular a curva exata de resposta do consumidor. </span>
+<span class="w"> </span><span class="c1">--Isolar os escalões de desconto para provar que descontos superiores a 10% causam quebra no volume e disparo do prejuízo.</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Desconto</span><span class="p">,</span><span class="w"> </span>
+<span class="k">AVG</span><span class="p">(</span><span class="n">Quantidade</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Media_Unidades</span><span class="p">,</span><span class="w"> </span>
+<span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Media_Lucro</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Desconto</span>
+<span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Desconto</span><span class="w"> </span><span class="k">ASC</span>
+
+
+<span class="c1">-- O Top 10 Intocável (Proteger o Núcleo) </span>
+<span class="c1">-- Objetivo: Identificar os 10 produtos heróis com maior Margem de Lucro Acumulada para os bloquear de campanhas promocionais futuras.</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span><span class="w"> </span>
+<span class="n">Categoria</span><span class="p">,</span><span class="w"> </span>
+<span class="k">SUM</span><span class="p">(</span><span class="n">Quantidade</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Total_Quantidade</span><span class="p">,</span><span class="w"> </span>
+<span class="n">ROUND</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="n">Margem_Lucro</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Total_Margem_Lucro</span><span class="w"> </span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">vw_Grupo2</span><span class="w"> </span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">NomeProduto</span><span class="p">,</span><span class="w"> </span><span class="n">Categoria</span><span class="w"> </span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Total_Margem_Lucro</span><span class="w"> </span><span class="k">DESC</span>
+</pre></div></td></tr></table></div>
+
+</div>
+</body>
+</html>
