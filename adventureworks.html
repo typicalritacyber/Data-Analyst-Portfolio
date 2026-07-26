@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdventureWorks Profitability Audit — Rita Lima</title>
+<meta name="description" content="SQL profitability audit of AdventureWorks — report and queries tracing a €1M loss to discount policy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="term">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="path">rita@lisbon:~/portfolio/adventureworks</span>
+      <a class="back" href="index.html">$ cd ..</a>
+    </div>
+    <div class="term-body">
+      <div><span class="prompt">$</span> <span class="cmd typed" id="typeline" data-type="ls -la adventureworks/"></span></div>
+      <h1>AdventureWorks <span class="accent">Audit</span></h1>
+      <div class="role">SQL · MSSQL · Profitability Analysis</div>
+      <p class="bio">Started from a paradox: revenue growing, profit per transaction falling. Worked it through three angles — seasonality, structural trend, pricing policy — and the answer was the discounts. Revenue of €109.8M against €9.37M profit, with the 2013 discounted segment alone bleeding close to €1M.</p>
+      <div class="meta-row">
+        <span class="meta">SQL</span>
+        <span class="meta">MSSQL</span>
+        <span class="stat">~€1M loss traced to discounts</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="projects">
+  <div class="sec-head">
+    <h2>Files</h2>
+    <span>2 files</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- Report -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">REPORT</span>
+        <span class="tool">SQL · PDF</span>
+      </div>
+      <div class="shot">
+        <img src="images/sql-report.png" alt="AdventureWorks profitability report, revenue vs margin chart"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/sql-report.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>Profitability Audit — Report</h3>
+        <p>The full write-up: the paradox, the three angles worked through, and the discount finding. Revenue of €109.8M against €9.37M profit, with the 2013 discounted segment alone bleeding close to €1M.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Relatorio_SQL.pdf" target="_blank" rel="noopener">view report</a>
+          <span class="metric">~€1M loss traced to discounts</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- SQL code -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">CODE</span>
+        <span class="tool">SQL</span>
+      </div>
+      <div class="shot">
+        <img src="images/sql-code.png" alt="SQL view creation code, syntax highlighted"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/sql-code.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>The Queries Behind It</h3>
+        <p>One view (vw_Grupo2) joining order headers, details, and product tables, filtered to completed orders so every number downstream agrees. Eight integrity tests before any analysis, then window functions for the rankings, LAG for year-over-year growth, and the elasticity query that showed discounts past 10% kill volume instead of buying it.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/SQL_Code.html" target="_blank" rel="noopener">view code</a>
+          <span class="metric">1 view · 8 integrity tests · CTEs, RANK, LAG</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- DECK PLACEHOLDER: if you have an AdventureWorks presentation, uncomment and
+         set the href + image below, then update "2 files" above to "3 files".
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">DECK</span>
+        <span class="tool">POWERPOINT</span>
+      </div>
+      <div class="shot">
+        <img src="images/adventureworks-deck.png" alt="AdventureWorks presentation title slide"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/adventureworks-deck.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>AdventureWorks — Deck</h3>
+        <p>Short description of the presentation.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/AdventureWorks_Presentation.pdf" target="_blank" rel="noopener">view slides</a>
+          <span class="metric">key stat</span>
+        </div>
+      </div>
+    </article>
+    -->
+
+  </div>
+</section>
+
+<footer>
+  <span>Rita Lima — <a href="index.html">back to all projects</a></span>
+  <span>last updated: July 2026</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

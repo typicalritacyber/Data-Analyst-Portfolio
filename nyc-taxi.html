@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Taxi Analysis — Rita Lima</title>
+<meta name="description" content="Power BI analysis of NYC taxi trips — vendor and driver dashboards off one star-schema model, plus the presentation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="term">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="path">rita@lisbon:~/portfolio/nyc-taxi</span>
+      <a class="back" href="index.html">$ cd ..</a>
+    </div>
+    <div class="term-body">
+      <div><span class="prompt">$</span> <span class="cmd typed" id="typeline" data-type="ls -la nyc-taxi/"></span></div>
+      <h1>NYC Taxi <span class="accent">Analysis</span></h1>
+      <div class="role">Power BI · DAX · Star Schema</div>
+      <p class="bio">Two dashboards off the same star-schema model, one for the vendor and one for the driver, because they want opposite things. Cleaned the raw trip data, derived pickup hour and weekday, classified vehicles by passenger count, then built the DAX for tip-per-mile and income-per-trip.</p>
+      <div class="meta-row">
+        <span class="meta">Power BI</span>
+        <span class="meta">DAX</span>
+        <span class="stat">$16.7M in trips · May–Jun 2020</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="projects">
+  <div class="sec-head">
+    <h2>Files</h2>
+    <span>2 files</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- Dashboard -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">DASHBOARD</span>
+        <span class="tool">POWER BI</span>
+      </div>
+      <div class="shot">
+        <img src="images/powerbi-dashboard.png" alt="NYC taxi vendor dashboard in Power BI"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/powerbi-dashboard.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>NYC Taxi — Power BI</h3>
+        <p>Two dashboards off the same star-schema model, one for the vendor and one for the driver. Cleaned the raw trip data, derived pickup hour and weekday, classified vehicles by passenger count, then built the DAX for tip-per-mile and income-per-trip.</p>
+        <div class="card-footer">
+          <a class="card-link" href="https://drive.google.com/file/d/1uoMCAmpJsY3h5PRdraPvv8vYHne8JQq0/view?usp=sharing" target="_blank" rel="noopener">view dashboard</a>
+          <span class="metric">$16.7M in trips · May–Jun 2020</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Deck -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">DECK</span>
+        <span class="tool">POWERPOINT</span>
+      </div>
+      <div class="shot">
+        <img src="images/nyc-deck.png" alt="NYC taxi analysis presentation title slide"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/nyc-deck.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>NYC Taxi — Deck</h3>
+        <p>Walked through the dashboards one business question at a time, each slide ending on what to actually do about it. Demand sits on a 13:00–18:00 plateau, Manhattan and Boro zones carry 98% of trips, and 21% of revenue traces back to an "Unknown Vendor" that needs fixing before anyone trusts the revenue numbers.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/PowerBI_Presentation.pdf" target="_blank" rel="noopener">view slides</a>
+          <span class="metric">21% revenue unattributed</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <span>Rita Lima — <a href="index.html">back to all projects</a></span>
+  <span>last updated: July 2026</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

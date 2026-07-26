@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Titanic Survival Analysis — Rita Lima</title>
+<meta name="description" content="Python survival analysis on the Titanic dataset — cleaning, chi-square tests, and three models compared on F1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="term">
+    <div class="term-bar">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="path">rita@lisbon:~/portfolio/titanic</span>
+      <a class="back" href="index.html">$ cd ..</a>
+    </div>
+    <div class="term-body">
+      <div><span class="prompt">$</span> <span class="cmd typed" id="typeline" data-type="ls -la titanic/"></span></div>
+      <h1>Titanic <span class="accent">Survival</span></h1>
+      <div class="role">Python · Pandas · scikit-learn</div>
+      <p class="bio">Cleaned the data first, then tested whether the obvious predictors were actually signal, then trained three models and compared them. 891 passengers, 38.4% survived, and the story underneath that number is mostly class and gender interacting.</p>
+      <div class="meta-row">
+        <span class="meta">Python</span>
+        <span class="meta">scikit-learn</span>
+        <span class="stat">F1 0.741 · Random Forest</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="projects">
+  <div class="sec-head">
+    <h2>Files</h2>
+    <span>2 files</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- Notebook -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">NOTEBOOK</span>
+        <span class="tool">PYTHON</span>
+      </div>
+      <div class="shot">
+        <img src="images/python-code.png" alt="Machine learning model comparison, logistic regression vs decision tree vs random forest"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/python-code.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>Titanic Survival — Python</h3>
+        <p>Cleaned the data first: dropped Cabin at 77% missing, imputed Age with medians split by gender since the distributions differ, filled Embarked with the mode. Ran chi-square tests to confirm Sex and Pclass were actually signal, then trained logistic regression, a decision tree, and a random forest on an 80/20 split. Random forest took it on F1.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Python_Code.html" target="_blank" rel="noopener">view notebook</a>
+          <span class="metric">F1 0.741 · Random Forest</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Deck -->
+    <article class="card">
+      <div class="card-head">
+        <span class="rec">DECK</span>
+        <span class="tool">POWERPOINT</span>
+      </div>
+      <div class="shot">
+        <img src="images/titanic-deck.png" alt="Titanic survival analysis presentation title slide"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="shot-fallback">images/titanic-deck.png missing</div>
+      </div>
+      <div class="card-body">
+        <h3>Titanic Survival — Deck</h3>
+        <p>Three research questions, each one going past the obvious answer. Gender dominates, but class moves it: first-class women survived at 96.8%, third-class women at 50%. Being a child nearly tripled a boy's odds and did almost nothing for a girl's. Travelling in a family of 2 to 4 beat travelling alone by a wide margin.</p>
+        <div class="card-footer">
+          <a class="card-link" href="files/Python_Presentation.pdf" target="_blank" rel="noopener">view slides</a>
+          <span class="metric">891 passengers · 38.4% survived</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <span>Rita Lima — <a href="index.html">back to all projects</a></span>
+  <span>last updated: July 2026</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
