@@ -3,152 +3,698 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rita Lima — Data & Marketing Portfolio</title>
-<meta name="description" content="Data analytics portfolio — SQL, Power BI, Python, and Excel projects, from profitability audits to ML models.">
-<meta property="og:title" content="Rita Lima — Data & Marketing Portfolio">
-<meta property="og:description" content="SQL, Power BI, Python, and Excel projects — profitability audits, dashboards, and ML models.">
+<title>Rita Lima — Data Analyst</title>
+<meta name="description" content="Data analytics portfolio — SQL, Python, Power BI and Excel projects, from a Lisbon bike-share failure analysis to a profitability audit.">
+<meta property="og:title" content="Rita Lima — Data Analyst">
+<meta property="og:description" content="SQL, Python, Power BI and Excel projects — failure analysis, profitability audits, dashboards.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://typicalritacyber.github.io/Data-Analyst-Portfolio/">
-<meta property="og:image" content="https://typicalritacyber.github.io/Data-Analyst-Portfolio/images/powerbi-dashboard.png">
+<meta property="og:image" content="https://typicalritacyber.github.io/Data-Analyst-Portfolio/images/gira-map.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#06070F;
+    --ink-2:#0D1020;
+    --panel:#0F1226;
+    --rule:#232A47;
+    --text:#E6E8F2;
+    --muted:#8D93B0;
+
+    --blue:#3B4BFF;
+    --accent:#D81BE0;
+    --accent-2:#7C5CFF;
+    --cyan:#22D3EE;
+    --grad:linear-gradient(120deg, var(--blue) 0%, var(--accent) 55%, var(--cyan) 100%);
+
+    --display:'Chakra Petch', system-ui, sans-serif;
+    --body:'Newsreader', Georgia, serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+
+    --wrap:1000px;
+    --rail:112px;
+    --r:18px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--body);
+    font-size:17px;
+    line-height:1.68;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* aurora field */
+  .aurora{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+  .aurora i{
+    position:absolute;
+    display:block;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:0.5;
+  }
+  .a1{width:620px; height:620px; top:-190px; left:-160px;
+      background:radial-gradient(circle at 40% 40%, rgba(59,75,255,0.85), transparent 68%);}
+  .a2{width:540px; height:540px; top:220px; right:-200px;
+      background:radial-gradient(circle at 50% 50%, rgba(216,27,224,0.55), transparent 68%);}
+  .a3{width:600px; height:600px; top:1500px; left:-220px;
+      background:radial-gradient(circle at 50% 50%, rgba(34,211,238,0.30), transparent 68%);}
+  .a4{width:560px; height:560px; bottom:-160px; right:-160px;
+      background:radial-gradient(circle at 50% 50%, rgba(124,92,255,0.45), transparent 68%);}
+
+  .wrap{max-width:var(--wrap); margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+  a{color:inherit;}
+  ::selection{background:rgba(216,27,224,0.35);}
+
+  .label{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:400;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+    padding:14px 0;
+    margin-bottom:8px;
+    background:rgba(6,7,15,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--rule);
+  }
+  .brand{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:13px;
+    line-height:1.15;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text);
+  }
+  .pill{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 18px;
+    border-radius:999px;
+    background:var(--grad);
+    color:#fff;
+    text-decoration:none;
+    white-space:nowrap;
+    box-shadow:0 6px 26px -10px rgba(216,27,224,0.9);
+  }
+
+  /* ---------- masthead ---------- */
+  header{padding:74px 0 0;}
+  header > .label{display:block; margin-bottom:22px;}
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(44px, 8vw, 74px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    color:#FFFFFF;
+  }
+  h1 .glow{
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .lede{
+    max-width:620px;
+    margin:0 0 32px;
+    font-size:19px;
+    line-height:1.62;
+    color:#BFC4DA;
+  }
+  .lede em{color:var(--text); font-style:normal; font-weight:400;}
+  .contact{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    font-family:var(--mono); font-size:12.5px;
+    padding-bottom:30px;
+  }
+  .contact a{
+    color:var(--muted);
+    text-decoration:none;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:2px;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .contact a:hover, .contact a:focus-visible{color:var(--cyan); border-color:var(--cyan);}
+
+  /* ---------- glow panel ---------- */
+  .panel{
+    position:relative;
+    border-radius:var(--r);
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+    border:1.5px solid transparent;
+    box-shadow:0 24px 60px -34px rgba(59,75,255,0.9), 0 0 0 1px rgba(255,255,255,0.02) inset;
+  }
+
+  /* ---------- opening chart ---------- */
+  .opener{
+    margin:0 0 8px;
+    padding:26px 26px 22px;
+    max-width:820px;
+  }
+  .opener svg{width:100%; height:auto; display:block; overflow:visible;}
+  .opener .grid{stroke:rgba(255,255,255,0.09); stroke-width:1; stroke-dasharray:2 5;}
+  .opener .axis{stroke:var(--rule); stroke-width:1; stroke-dasharray:none;}
+  .opener .ax{font-family:var(--mono); font-size:9.5px; fill:var(--muted); letter-spacing:0.08em;}
+  .opener .trend{
+    fill:none; stroke:url(#ramp); stroke-width:2.6;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw 2.1s cubic-bezier(.35,.6,.25,1) .3s forwards;
+    filter:drop-shadow(0 0 8px rgba(216,27,224,0.55));
+  }
+  .opener .pt{fill:var(--panel); stroke:var(--cyan); stroke-width:2; opacity:0; animation:pop .4s ease var(--d) forwards;}
+  .opener .note{font-family:var(--mono); font-size:10px; fill:#A2A8C4; letter-spacing:0.04em;}
+  .opener .quip{font-family:var(--mono); font-size:11.5px; fill:var(--accent); letter-spacing:0.06em;}
+  .opener .lead{stroke:var(--muted); stroke-width:1; opacity:0.55;}
+  .opener .ylab{font-family:var(--mono); font-size:9.5px; fill:var(--muted); letter-spacing:0.14em; text-transform:uppercase;}
+  .opener-foot{
+    padding-top:14px; margin:0;
+    font-family:var(--mono); font-size:11px; line-height:1.75;
+    color:#9AA0BC; letter-spacing:0.02em;
+    max-width:660px;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  @keyframes pop{to{opacity:1;}}
+
+  /* ---------- toolkit ---------- */
+  .toolkit{
+    position:relative;
+    margin:26px 0 0;
+    padding:18px 0 20px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    display:flex; flex-wrap:wrap; gap:8px 22px; align-items:baseline;
+  }
+  .toolkit::before{
+    content:""; position:absolute; top:-1px; left:0;
+    width:128px; height:2px; border-radius:2px;
+    background:var(--grad);
+  }
+  .toolkit .label{flex:0 0 auto;}
+  .toolkit p{
+    margin:0;
+    font-family:var(--mono); font-size:12.5px; line-height:1.9;
+    color:#A2A8C4;
+  }
+
+  /* ---------- figures ---------- */
+  main{padding:64px 0 0;}
+  .fig{
+    margin:0 0 86px;
+    display:grid;
+    grid-template-columns:var(--rail) 1fr;
+    gap:0 30px;
+    align-items:start;
+  }
+  .rail{padding-top:2px;}
+  .rail-num{
+    display:block;
+    font-family:var(--display);
+    font-weight:700;
+    font-size:52px;
+    line-height:0.88;
+    letter-spacing:-0.02em;
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .rail .label{display:block; margin-top:12px; line-height:1.5;}
+  .rail .stat{color:var(--cyan);}
+  .fig-body{min-width:0;}
+
+  .frame{
+    display:block;
+    overflow:hidden;
+    line-height:0;
+    transition:box-shadow .3s ease, transform .3s ease;
+  }
+  .frame img{
+    width:100%; height:auto; display:block;
+    border-radius:calc(var(--r) - 4px);
+    transition:transform .5s ease;
+  }
+  a.frame:hover, a.frame:focus-visible{
+    transform:translateY(-2px);
+    box-shadow:0 30px 70px -30px rgba(216,27,224,0.75);
+  }
+  a.frame:hover img{transform:scale(1.014);}
+  .frame-missing{
+    display:none;
+    font-family:var(--mono); font-size:12px; color:var(--muted);
+    line-height:1.6; padding:44px 22px; text-align:center;
+  }
+  .ribbon-frame{padding:26px 24px 18px; line-height:1.55;}
+  .ribbon-frame svg{width:100%; height:auto; display:block; overflow:visible;}
+
+  .caption{padding:24px 0 0;}
+  h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:27px;
+    line-height:1.2;
+    letter-spacing:-0.005em;
+    margin:0 0 6px;
+    color:#FFFFFF;
+  }
+  .credit{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em;
+    color:var(--muted); margin:0 0 16px;
+  }
+  .caption p.body{margin:0 0 14px; max-width:660px; color:#BFC4DA;}
+  .caption p.body:last-of-type{margin-bottom:0;}
+
+  .finding{
+    margin:20px 0 0;
+    padding:14px 18px 14px 20px;
+    border-radius:12px;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+    border:1px solid transparent;
+    font-family:var(--mono); font-size:12.5px; line-height:1.72;
+    letter-spacing:0.01em; color:#C3C8DE;
+    max-width:680px;
+  }
+
+  .links{
+    margin-top:22px;
+    display:flex; flex-wrap:wrap; gap:10px 12px; align-items:center;
+  }
+  .links a{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#C3C8DE;
+    text-decoration:none;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid var(--rule);
+    background:rgba(255,255,255,0.02);
+    transition:color .18s ease, border-color .18s ease, background .18s ease;
+  }
+  .links a:hover, .links a:focus-visible{
+    color:#fff; border-color:transparent; background:var(--grad);
+  }
+  .links a.primary{
+    background:var(--grad); color:#fff; border-color:transparent;
+    box-shadow:0 8px 28px -12px rgba(216,27,224,0.95);
+  }
+
+  /* ---------- ribbon ---------- */
+  .bar{transform-origin:center 58px;}
+  .bar.up{fill:var(--accent);}
+  .bar.down{fill:var(--blue); opacity:0.85; transform-origin:center 61px;}
+  .bar.now{filter:drop-shadow(0 0 8px currentColor);}
+  .bar.up.now{fill:#FF63E8;}
+  .bar.down.now{fill:var(--cyan); opacity:1;}
+  .axis{stroke:var(--rule); stroke-width:1;}
+  .tick{font-family:var(--mono); font-size:9.5px; fill:var(--muted); letter-spacing:0.1em;}
+  .ribbon-key{
+    display:flex; flex-wrap:wrap; gap:6px 20px;
+    padding-top:14px;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.05em; color:var(--muted);
+  }
+  .ribbon-key b{font-weight:400;}
+  .key-e{color:var(--accent);}
+  .key-f{color:var(--blue);}
+  .ribbon-now{color:var(--cyan);}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--rule);
+    margin-top:20px;
+    padding:26px 0 70px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    position:relative; z-index:1;
+  }
+
+  a:focus-visible, .frame:focus-visible{outline:2px solid var(--cyan); outline-offset:3px;}
+
+  /* ---------- motion ---------- */
+  .fig{opacity:0; transform:translateY(14px);}
+  .fig.in{opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease;}
+  .bar{transform:scaleY(0); animation:grow .55s cubic-bezier(.2,.7,.3,1) forwards; animation-delay:var(--d);}
+  @keyframes grow{to{transform:scaleY(1);}}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .fig{opacity:1; transform:none;}
+    .frame img, a.frame{transition:none;}
+    a.frame:hover img{transform:none;}
+    .bar{transform:none; animation:none;}
+    .opener .trend{stroke-dasharray:none; stroke-dashoffset:0; animation:none;}
+    .opener .pt{opacity:1; animation:none;}
+  }
+
+  @media (max-width:760px){
+    .fig{grid-template-columns:1fr; gap:0;}
+    .rail{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; padding-bottom:14px;}
+    .rail-num{font-size:34px;}
+    .rail .label{margin-top:0;}
+    .aurora i{filter:blur(70px); opacity:0.42;}
+  }
+  @media (max-width:640px){
+    body{font-size:16px;}
+    header{padding-top:44px;}
+    .lede{font-size:17.5px;}
+    .fig{margin-bottom:62px;}
+    h2{font-size:23px;}
+    .opener{padding:20px 16px 18px;}
+    .ribbon-frame{padding:20px 14px 14px;}
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="term">
-    <div class="term-bar">
-      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <span class="path">rita@lisbon:~/portfolio</span>
-    </div>
-    <div class="term-body">
-      <div><span class="prompt">$</span> <span class="cmd typed" id="typeline" data-type="./load_projects.sh --all"></span></div>
-      <h1>Rita <span class="accent">Lima</span></h1>
-      <div class="role">Digital Marketing × Data Analytics</div>
-      <p class="bio">Studied <b>Applied Statistics</b>, ended up running digital marketing for an e-commerce client. SEO, CRO, email, PPC — tracked through GA4 and Search Console. Data's the throughline. These are projects from my <b>AI Data Analyst</b> certificate: SQL, Power BI, Python, Excel, and the decks that presented them.</p>
-      <div class="contact-row">
-        <a href="mailto:ritalimaserra99@gmail.com">ritalimaserra99@gmail.com</a>
-        <a href="https://linkedin.com/in/rita-lima-22861b321" target="_blank" rel="noopener">linkedin/rita-lima</a>
-        <a href="tel:+351916416778">+351 916 416 778</a>
-      </div>
-    </div>
-  </div>
-</header>
+<div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i></div>
 
-<div class="skills">
-  <span class="chip">SQL</span>
-  <span class="chip">Python · Pandas · scikit-learn</span>
-  <span class="chip">Power BI · DAX</span>
-  <span class="chip">Advanced Excel</span>
-  <span class="chip">GA4 · Search Console</span>
-  <span class="chip">R · SPSS</span>
-  <span class="chip">Regression · Forecasting</span>
-  <span class="chip">KPI Tracking</span>
+<div class="wrap">
+
+  <div class="topbar">
+    <span class="brand">Rita<br>Lima.</span>
+    <a class="pill" href="#fig01">5 projects ↓</a>
+  </div>
+
+  <header>
+    <span class="label">Data analyst · Lisbon, Portugal</span>
+    <h1>Rita <span class="glow">Lima</span></h1>
+    <p class="lede">I studied <em>Applied Statistics</em> and ended up running digital marketing for an e-commerce retailer, which is where the analysis got useful. These are the projects: a bike-share network audit for Lisbon, a profitability audit in SQL, dashboards, and a survival model. Each one ends on what somebody should do about it.</p>
+    <div class="contact">
+      <a href="mailto:ritalimaserra99@gmail.com">ritalimaserra99@gmail.com</a>
+      <a href="https://linkedin.com/in/rita-lima-22861b321" target="_blank" rel="noopener">linkedin/rita-lima</a>
+      <a href="tel:+351916416778">+351 916 416 778</a>
+    </div>
+  </header>
+
+
+
+  <figure class="opener panel">
+    <figcaption class="label" style="display:block;margin-bottom:10px;">
+      <span style="color:var(--accent)">Fig. 00</span> &nbsp;Share of my job that has been actual statistics
+    </figcaption>
+    <svg viewBox="0 0 720 236" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="A line chart of how much of Rita's work has been statistics: 100% during the degree, dropping sharply during the gaming channel years, climbing back through marketing analytics to today.">
+      <defs>
+        <linearGradient id="ramp" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#3B4BFF"/>
+          <stop offset="55%" stop-color="#D81BE0"/>
+          <stop offset="100%" stop-color="#22D3EE"/>
+        </linearGradient>
+      </defs>
+      <text class="ylab" transform="rotate(-90 18 130)" x="18" y="130" text-anchor="middle">% actually statistics</text>
+      <line class="grid" x1="60" y1="205.0" x2="700" y2="205.0"/>
+      <text class="ax" x="52" y="208.5" text-anchor="end">0%</text>
+      <line class="grid" x1="60" y1="162.0" x2="700" y2="162.0"/>
+      <text class="ax" x="52" y="165.5" text-anchor="end">25%</text>
+      <line class="grid" x1="60" y1="119.0" x2="700" y2="119.0"/>
+      <text class="ax" x="52" y="122.5" text-anchor="end">50%</text>
+      <line class="grid" x1="60" y1="76.0" x2="700" y2="76.0"/>
+      <text class="ax" x="52" y="79.5" text-anchor="end">75%</text>
+      <line class="grid" x1="60" y1="33.0" x2="700" y2="33.0"/>
+      <text class="ax" x="52" y="36.5" text-anchor="end">100%</text>
+      <text class="ax" x="110.4" y="224" text-anchor="middle">2020</text>
+      <text class="ax" x="278.4" y="224" text-anchor="middle">2022</text>
+      <text class="ax" x="446.4" y="224" text-anchor="middle">2024</text>
+      <text class="ax" x="614.4" y="224" text-anchor="middle">2026</text>
+      <line class="axis" x1="60" y1="205.0" x2="700" y2="205.0"/>
+      <path class="trend" d="M 85.2 33.0 C 103.4 33.9, 150.3 16.9, 194.4 38.2 C 238.5 59.4, 303.6 138.8, 349.8 160.3 C 396.0 181.8, 435.9 168.0, 471.6 167.2 C 507.3 166.3, 539.5 164.6, 564.0 155.1 C 588.5 145.7, 601.8 127.3, 618.6 110.4 C 635.4 93.5, 657.1 63.1, 664.8 53.6"/>
+      <circle class="pt" cx="85.2" cy="33.0" r="4.5" style="--d:0.90s"/>
+      <line class="lead" x1="93" y1="51" x2="86.5" y2="39"/>
+      <text class="note" x="96" y="58" text-anchor="start">BSc Applied Statistics</text>
+      <circle class="pt" cx="349.8" cy="160.3" r="4.5" style="--d:1.02s"/>
+      <line class="lead" x1="350" y1="178" x2="350" y2="167"/>
+      <text class="note" x="350" y="185" text-anchor="middle">gaming channel, 10k subs</text>
+      <circle class="pt" cx="618.6" cy="110.4" r="4.5" style="--d:1.20s"/>
+      <line class="lead" x1="604" y1="112" x2="614" y2="111"/>
+      <text class="note" x="600" y="116" text-anchor="end">growth strategy, 7 channels</text>
+      <circle class="pt" cx="664.8" cy="53.6" r="4.5" style="--d:1.26s"/>
+      <line class="lead" x1="664" y1="43" x2="665.5" y2="49"/>
+      <text class="note" x="668" y="38" text-anchor="end">this portfolio</text>
+      <line class="lead" x1="325" y1="92" x2="292" y2="99"/>
+      <text class="quip" x="332" y="96">somehow</text>
+    </svg>
+    <p class="opener-foot">n = 1. Self-reported, no error bars, there is only one of me. The dip is real and I would defend it in an interview: reading watch time, CTR and retention every week is the same job with worse notation.</p>
+  </figure>
+
+
+  <div class="toolkit">
+    <span class="label">Toolkit</span>
+    <p>SQL · Python (pandas, seaborn, scipy, folium) · Power BI · Advanced Excel · R · SPSS · GA4 · Search Console · regression, forecasting, survey design</p>
+  </div>
+
+  <main>
+
+    <!-- FIG 01 · GIRA -->
+    <article class="fig">
+      <div class="rail">
+        <span class="rail-num">01</span>
+        <span class="label">Python · pandas</span>
+        <span class="label">EMEL · 2020–2023</span>
+        <span class="label stat">4.09M snapshots</span>
+      </div>
+      <div class="fig-body">
+      <div class="frame ribbon-frame panel" id="fig01">
+        <svg viewBox="0 0 720 126" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="Failure rate of the Lisbon GIRA bike network by hour of day: stations run empty by day and fill up overnight.">
+      <line class="axis" x1="0" y1="59.5" x2="720" y2="59.5"/>
+      <rect class="bar up" data-h="0" x="6" y="23.2" width="18" height="34.8" style="--d:0.000s"/>
+        <rect class="bar down" data-h="0" x="6" y="61" width="18" height="17.5" style="--d:0.000s"/>
+        <rect class="bar up" data-h="1" x="36" y="22.9" width="18" height="35.1" style="--d:0.022s"/>
+        <rect class="bar down" data-h="1" x="36" y="61" width="18" height="18.2" style="--d:0.022s"/>
+        <rect class="bar up" data-h="2" x="66" y="24.5" width="18" height="33.5" style="--d:0.044s"/>
+        <rect class="bar down" data-h="2" x="66" y="61" width="18" height="19.3" style="--d:0.044s"/>
+        <rect class="bar up" data-h="3" x="96" y="27.5" width="18" height="30.5" style="--d:0.066s"/>
+        <rect class="bar down" data-h="3" x="96" y="61" width="18" height="20.0" style="--d:0.066s"/>
+        <rect class="bar up" data-h="4" x="126" y="27.8" width="18" height="30.2" style="--d:0.088s"/>
+        <rect class="bar down" data-h="4" x="126" y="61" width="18" height="20.3" style="--d:0.088s"/>
+        <rect class="bar up" data-h="5" x="156" y="29.0" width="18" height="29.0" style="--d:0.110s"/>
+        <rect class="bar down" data-h="5" x="156" y="61" width="18" height="18.6" style="--d:0.110s"/>
+        <rect class="bar up" data-h="6" x="186" y="28.0" width="18" height="30.0" style="--d:0.132s"/>
+        <rect class="bar down" data-h="6" x="186" y="61" width="18" height="16.1" style="--d:0.132s"/>
+        <rect class="bar up" data-h="7" x="216" y="29.6" width="18" height="28.4" style="--d:0.154s"/>
+        <rect class="bar down" data-h="7" x="216" y="61" width="18" height="10.3" style="--d:0.154s"/>
+        <rect class="bar up" data-h="8" x="246" y="22.9" width="18" height="35.1" style="--d:0.176s"/>
+        <rect class="bar down" data-h="8" x="246" y="61" width="18" height="6.6" style="--d:0.176s"/>
+        <rect class="bar up" data-h="9" x="276" y="13.1" width="18" height="44.9" style="--d:0.198s"/>
+        <rect class="bar down" data-h="9" x="276" y="61" width="18" height="6.4" style="--d:0.198s"/>
+        <rect class="bar up" data-h="10" x="306" y="7.9" width="18" height="50.1" style="--d:0.220s"/>
+        <rect class="bar down" data-h="10" x="306" y="61" width="18" height="7.5" style="--d:0.220s"/>
+        <rect class="bar up" data-h="11" x="336" y="7.3" width="18" height="50.7" style="--d:0.242s"/>
+        <rect class="bar down" data-h="11" x="336" y="61" width="18" height="6.1" style="--d:0.242s"/>
+        <rect class="bar up" data-h="12" x="366" y="9.8" width="18" height="48.2" style="--d:0.264s"/>
+        <rect class="bar down" data-h="12" x="366" y="61" width="18" height="5.1" style="--d:0.264s"/>
+        <rect class="bar up" data-h="13" x="396" y="11.9" width="18" height="46.1" style="--d:0.286s"/>
+        <rect class="bar down" data-h="13" x="396" y="61" width="18" height="4.9" style="--d:0.286s"/>
+        <rect class="bar up" data-h="14" x="426" y="15.9" width="18" height="42.1" style="--d:0.308s"/>
+        <rect class="bar down" data-h="14" x="426" y="61" width="18" height="5.6" style="--d:0.308s"/>
+        <rect class="bar up" data-h="15" x="456" y="13.3" width="18" height="44.7" style="--d:0.330s"/>
+        <rect class="bar down" data-h="15" x="456" y="61" width="18" height="5.5" style="--d:0.330s"/>
+        <rect class="bar up" data-h="16" x="486" y="10.9" width="18" height="47.1" style="--d:0.352s"/>
+        <rect class="bar down" data-h="16" x="486" y="61" width="18" height="5.2" style="--d:0.352s"/>
+        <rect class="bar up" data-h="17" x="516" y="11.5" width="18" height="46.5" style="--d:0.374s"/>
+        <rect class="bar down" data-h="17" x="516" y="61" width="18" height="5.5" style="--d:0.374s"/>
+        <rect class="bar up" data-h="18" x="546" y="12.2" width="18" height="45.8" style="--d:0.396s"/>
+        <rect class="bar down" data-h="18" x="546" y="61" width="18" height="5.9" style="--d:0.396s"/>
+        <rect class="bar up" data-h="19" x="576" y="17.0" width="18" height="41.0" style="--d:0.418s"/>
+        <rect class="bar down" data-h="19" x="576" y="61" width="18" height="7.8" style="--d:0.418s"/>
+        <rect class="bar up" data-h="20" x="606" y="20.7" width="18" height="37.3" style="--d:0.440s"/>
+        <rect class="bar down" data-h="20" x="606" y="61" width="18" height="10.5" style="--d:0.440s"/>
+        <rect class="bar up" data-h="21" x="636" y="24.1" width="18" height="33.9" style="--d:0.462s"/>
+        <rect class="bar down" data-h="21" x="636" y="61" width="18" height="12.6" style="--d:0.462s"/>
+        <rect class="bar up" data-h="22" x="666" y="23.6" width="18" height="34.4" style="--d:0.484s"/>
+        <rect class="bar down" data-h="22" x="666" y="61" width="18" height="13.4" style="--d:0.484s"/>
+        <rect class="bar up" data-h="23" x="696" y="22.6" width="18" height="35.4" style="--d:0.506s"/>
+        <rect class="bar down" data-h="23" x="696" y="61" width="18" height="16.2" style="--d:0.506s"/>
+        <text class="tick" x="15.0" y="118" text-anchor="middle">00</text>
+        <text class="tick" x="195.0" y="118" text-anchor="middle">06</text>
+        <text class="tick" x="375.0" y="118" text-anchor="middle">12</text>
+        <text class="tick" x="555.0" y="118" text-anchor="middle">18</text>
+        <text class="tick" x="705.0" y="118" text-anchor="middle">23</text>
+    </svg>
+        <div class="ribbon-key">
+      <span class="key-e">▮ <b>no bike available</b></span>
+      <span class="key-f">▮ <b>no free dock</b></span>
+      <span>GIRA · Lisbon · 4,090,179 snapshots · by hour of day</span>
+      <span class="ribbon-now" id="nowline"></span>
+    </div>
+      </div>
+      <div class="caption">
+        <h2>GIRA Bike-Share — Where the Network Fails</h2>
+        <p class="credit">Group submission, 4 people · cleaning, analysis, report and deck are mine</p>
+        <p class="body">Four years of Lisbon bike-share availability for EMEL, turned into a ranked list of which station needs a van and at what hour. Eight source files that don't share a schema: 2020 logs empty docks and no status, 2022 onwards logs total docks plus status, and 2021 carries both, which is what makes the harmonisation testable rather than assumed. Dropped 3.4M byte-identical rows the logger had rewritten, flagged the impossible readings and the maintenance rows instead of deleting them, and kept maintenance out of every denominator so a station out of service isn't counted as one that worked.</p>
+        <p class="body">The network is empty in 5.24% of snapshots, but that average hides station-hours above 30%. Station 519 at 09:00 is empty a third of the time and tops the priority list, and pairing it with a station that fills up in the same hour gives a van loop of 1.07 km.</p>
+        <p class="finding">Elevation explains the direction of failure at 0.386, against 0.061 for latitude. Riders coast downhill and don't ride back up, so hillside stations drain and riverside ones overflow.</p>
+        <div class="links">
+          <a class="primary" href="files/GIRA_Report.pdf" target="_blank" rel="noopener">Report</a>
+          <a href="files/GIRA_Presentation.pdf" target="_blank" rel="noopener">Slides</a>
+          <a href="files/GIRA_Cleaning_Notebook.html" target="_blank" rel="noopener">Cleaning notebook</a>
+          <a href="files/GIRA_Analysis_Notebook.html" target="_blank" rel="noopener">Analysis notebook</a>
+        </div>
+      </div>
+      </div>
+    </article>
+
+    <!-- FIG 02 · AdventureWorks -->
+    <article class="fig">
+      <div class="rail">
+        <span class="rail-num">02</span>
+        <span class="label">SQL · MSSQL</span>
+        <span class="label stat">€109.8M audited</span>
+      </div>
+      <div class="fig-body">
+      <a class="frame panel" href="files/Relatorio_SQL.pdf" target="_blank" rel="noopener">
+        <img src="images/sql-report.png" alt="AdventureWorks profitability report, revenue against margin"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="frame-missing">images/sql-report.png missing</span>
+      </a>
+      <div class="caption">
+        <h2>AdventureWorks Profitability Audit</h2>
+        <p class="body">Started from a paradox: revenue growing, profit per transaction falling. Worked it through three angles, seasonality, structural trend and pricing policy, and the answer was the discounts. Revenue of €109.8M against €9.37M profit, with the 2013 discounted segment alone bleeding close to €1M.</p>
+        <p class="body">One view (vw_Grupo2) joining order headers, details and product tables, filtered to completed orders so every number downstream agrees. Eight integrity tests before any analysis, then window functions for the rankings, LAG for year-over-year growth, and the elasticity query behind the finding below.</p>
+        <p class="finding">Discounts past 10% kill volume instead of buying it. Roughly €1M of lost profit traces back to a pricing policy, not to demand.</p>
+        <div class="links">
+          <a class="primary" href="files/Relatorio_SQL.pdf" target="_blank" rel="noopener">Report</a>
+          <a href="files/SQL_Code.html" target="_blank" rel="noopener">Queries</a>
+        </div>
+      </div>
+      </div>
+    </article>
+
+    <!-- FIG 03 · NYC Taxi -->
+    <article class="fig">
+      <div class="rail">
+        <span class="rail-num">03</span>
+        <span class="label">Power BI · DAX</span>
+        <span class="label stat">$16.7M in trips</span>
+      </div>
+      <div class="fig-body">
+      <a class="frame panel" href="https://drive.google.com/file/d/1uoMCAmpJsY3h5PRdraPvv8vYHne8JQq0/view?usp=sharing" target="_blank" rel="noopener">
+        <img src="images/powerbi-dashboard.png" alt="NYC taxi vendor dashboard built in Power BI"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="frame-missing">images/powerbi-dashboard.png missing</span>
+      </a>
+      <div class="caption">
+        <h2>NYC Taxi Analysis</h2>
+        <p class="body">Two dashboards off the same star-schema model, one for the vendor and one for the driver, because they want opposite things. Cleaned the raw trip data, derived pickup hour and weekday, classified vehicles by passenger count, then built the DAX for tip-per-mile and income-per-trip.</p>
+        <p class="body">The deck walks through it one business question at a time, each slide ending on what to actually do about it. Demand sits on a 13:00–18:00 plateau and Manhattan and Boro zones carry 98% of trips.</p>
+        <p class="finding">21% of revenue traces back to an unknown vendor. That needs fixing before anyone trusts the revenue numbers on either dashboard.</p>
+        <div class="links">
+          <a class="primary" href="https://drive.google.com/file/d/1uoMCAmpJsY3h5PRdraPvv8vYHne8JQq0/view?usp=sharing" target="_blank" rel="noopener">Dashboard</a>
+          <a href="files/PowerBI_Presentation.pdf" target="_blank" rel="noopener">Slides</a>
+        </div>
+      </div>
+      </div>
+    </article>
+
+    <!-- FIG 04 · Titanic -->
+    <article class="fig">
+      <div class="rail">
+        <span class="rail-num">04</span>
+        <span class="label">Python · scikit-learn</span>
+        <span class="label stat">891 passengers</span>
+      </div>
+      <div class="fig-body">
+      <a class="frame panel" href="files/Python_Code.html" target="_blank" rel="noopener">
+        <img src="images/python-code.png" alt="Model comparison: logistic regression, decision tree and random forest"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="frame-missing">images/python-code.png missing</span>
+      </a>
+      <div class="caption">
+        <h2>Titanic Survival Analysis</h2>
+        <p class="body">Cleaned the data first: dropped Cabin at 77% missing, imputed Age with medians split by gender since the distributions differ, filled Embarked with the mode. Ran chi-square tests to confirm Sex and Pclass were actually signal, then trained logistic regression, a decision tree and a random forest on an 80/20 split. Random forest took it on F1, at 0.741.</p>
+        <p class="body">Three research questions in the deck, each one going past the obvious answer. Being a child nearly tripled a boy's odds and did almost nothing for a girl's, and travelling in a family of 2 to 4 beat travelling alone by a wide margin.</p>
+        <p class="finding">Gender dominates, but class moves it. First-class women survived at 96.8%, third-class women at 50%.</p>
+        <div class="links">
+          <a class="primary" href="files/Python_Code.html" target="_blank" rel="noopener">Notebook</a>
+          <a href="files/Python_Presentation.pdf" target="_blank" rel="noopener">Slides</a>
+        </div>
+      </div>
+      </div>
+    </article>
+
+    <!-- FIG 05 · Global Superstore -->
+    <article class="fig">
+      <div class="rail">
+        <span class="rail-num">05</span>
+        <span class="label">Advanced Excel</span>
+        <span class="label stat">~50k order lines</span>
+      </div>
+      <div class="fig-body">
+      <a class="frame panel" href="https://1drv.ms/x/c/17d24fbe36d98457/IQAomcurJUvJTZbchob5Bzc6AZbg0e53NNSurEzn1WFcdcY?e=uPre2z" target="_blank" rel="noopener">
+        <img src="images/excel-dashboard.png" alt="Global Superstore KPI dashboard built in Excel"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <span class="frame-missing">images/excel-dashboard.png missing — screenshot the Dashboard tab and save it here</span>
+      </a>
+      <div class="caption">
+        <h2>Global Superstore — Excel Dashboard</h2>
+        <p class="body">KPI dashboard over roughly 50k order lines: revenue, profit, cost and orders up top, then profit by region, category mix by market, and net profit margin. Built the derived columns (net sales, net profit, profit category, returns excluded) so the pivots feeding the dashboard actually reconcile.</p>
+        <p class="finding">€12.39M revenue against €1.43M profit, with the margin split by region and market rather than reported as one number.</p>
+        <div class="links">
+          <a class="primary" href="https://1drv.ms/x/c/17d24fbe36d98457/IQAomcurJUvJTZbchob5Bzc6AZbg0e53NNSurEzn1WFcdcY?e=uPre2z" target="_blank" rel="noopener">Workbook</a>
+        </div>
+      </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer>
+    <span class="label">Rita Lima — Lisbon</span>
+    <span class="label">Updated August 2026</span>
+  </footer>
+
 </div>
 
-<section class="projects" id="projects">
-  <div class="sec-head">
-    <h2>Projects</h2>
-    <span>4 records loaded</span>
-  </div>
+<script>
+  (function(){
+    var h = new Date().getHours();
+    document.querySelectorAll('.bar[data-h="'+h+'"]').forEach(function(b){ b.classList.add('now'); });
+    var rates = [[4.69,3.23],[4.73,3.35],[4.51,3.56],[4.11,3.68],[4.07,3.74],[3.91,3.43],[4.04,2.96],[3.82,1.90],[4.72,1.22],[6.05,1.17],[6.75,1.38],[6.83,1.12],[6.49,0.94],[6.21,0.91],[5.67,1.04],[6.02,1.01],[6.34,0.96],[6.26,1.01],[6.17,1.09],[5.52,1.43],[5.02,1.93],[4.57,2.33],[4.63,2.46],[4.77,2.98]];
+    var el = document.getElementById('nowline');
+    if(el){
+      var pad = (h<10?'0':'')+h;
+      el.textContent = 'now ' + pad + ':00 — ' + rates[h][0].toFixed(2) + '% empty, ' + rates[h][1].toFixed(2) + '% full';
+    }
+  })();
 
-  <div class="grid">
+  (function(){
+    var figs = document.querySelectorAll('.fig');
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)){
+      figs.forEach(function(f){ f.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+    figs.forEach(function(f){ io.observe(f); });
+  })();
+</script>
 
-    <!-- AdventureWorks -->
-    <a class="card" href="adventureworks.html">
-      <div class="card-head">
-        <span class="rec">REC-01</span>
-        <span class="tool">SQL</span>
-      </div>
-      <div class="shot">
-        <img src="images/sql-report.png" alt="AdventureWorks profitability report, revenue vs margin chart"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="shot-fallback">images/sql-report.png missing</div>
-      </div>
-      <div class="card-body">
-        <h3>AdventureWorks Profitability Audit</h3>
-        <p>Revenue growing, profit per transaction falling. Traced the paradox through seasonality, trend, and pricing, and the discounts were the answer. €109.8M revenue against €9.37M profit.</p>
-        <div class="card-footer">
-          <span class="card-link">open project →</span>
-          <span class="count">report · SQL code</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- NYC Taxi -->
-    <a class="card" href="nyc-taxi.html">
-      <div class="card-head">
-        <span class="rec">REC-02</span>
-        <span class="tool">POWER BI</span>
-      </div>
-      <div class="shot">
-        <img src="images/powerbi-dashboard.png" alt="NYC taxi vendor dashboard in Power BI"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="shot-fallback">images/powerbi-dashboard.png missing</div>
-      </div>
-      <div class="card-body">
-        <h3>NYC Taxi Analysis</h3>
-        <p>Two dashboards off one star-schema model, one for the vendor and one for the driver, because they want opposite things. Cleaned the raw trips, built the DAX for tip-per-mile and income-per-trip.</p>
-        <div class="card-footer">
-          <span class="card-link">open project →</span>
-          <span class="count">dashboard · deck</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- Global Superstore -->
-    <a class="card" href="global-superstore.html">
-      <div class="card-head">
-        <span class="rec">REC-03</span>
-        <span class="tool">EXCEL</span>
-      </div>
-      <div class="shot">
-        <img src="images/excel-dashboard.png" alt="Global Superstore Excel dashboard"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="shot-fallback">images/excel-dashboard.png missing</div>
-      </div>
-      <div class="card-body">
-        <h3>Global Superstore Dashboard</h3>
-        <p>KPI dashboard over ~50k order lines: revenue, profit, cost, orders, then profit by region and category mix by market. Built the derived columns so the pivots feeding it actually reconcile.</p>
-        <div class="card-footer">
-          <span class="card-link">open project →</span>
-          <span class="count">Excel dashboard</span>
-        </div>
-      </div>
-    </a>
-
-    <!-- Titanic -->
-    <a class="card" href="titanic.html">
-      <div class="card-head">
-        <span class="rec">REC-04</span>
-        <span class="tool">PYTHON</span>
-      </div>
-      <div class="shot">
-        <img src="images/python-code.png" alt="Machine learning model comparison, logistic regression vs decision tree vs random forest"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="shot-fallback">images/python-code.png missing</div>
-      </div>
-      <div class="card-body">
-        <h3>Titanic Survival Analysis</h3>
-        <p>Cleaned the data, ran chi-square tests to confirm Sex and Pclass were signal, then trained logistic regression, a decision tree, and a random forest. Random forest took it on F1.</p>
-        <div class="card-footer">
-          <span class="card-link">open project →</span>
-          <span class="count">notebook · deck</span>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<footer>
-  <span>Rita Lima — Lisbon, Portugal</span>
-  <span>last updated: July 2026</span>
-</footer>
-
-<script src="script.js"></script>
 </body>
 </html>
